@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.scss';
+import PokemonList from './components/PokemonList';
 
 const ENDPOINT = 'https://pokeapi.co/api/v2/pokemon/?limit=3&offset=3';
 
@@ -8,7 +9,6 @@ class App extends Component {
     super(props);
     this.state = {
       pokemon: [],
-      namePokemon: [],
       filteredPokemon: ''
     }
 
@@ -21,15 +21,15 @@ class App extends Component {
     fetch(ENDPOINT)
       .then(response => response.json())
       .then(data => {
+        console.log(data.results);
         const newPokemon = data.results.map((item, index) => {
           return {...item, id: index};
         })
+        console.log(newPokemon);
         this.setState({
-          pokemon: data.results.url,
-          namePokemon: newPokemon
+          pokemon: newPokemon,
         })
       })
-      console.log(this.state.namePokemon);
   }
 
   componentDidMount(){
@@ -44,9 +44,9 @@ class App extends Component {
   }
 
   getFilteredPokemon(){
-    const {namePokemon, filteredPokemon} = this.state;
+    const {pokemon, filteredPokemon} = this.state;
 
-    return namePokemon.filter(item => item.name.toUpperCase().includes(filteredPokemon.toUpperCase()));
+    return pokemon.filter(item => item.name.toUpperCase().includes(filteredPokemon.toUpperCase()));
   }
 
   render() {
@@ -57,10 +57,7 @@ class App extends Component {
           <input type="text" onKeyUp={this.filterPokemon}/>
         </header>
         <main className="app-main">
-          <div>
-            <ul>
-            </ul>
-          </div>
+            <PokemonList filteredPokemon={this.getFilteredPokemon()}/>
         </main>
       </div>
     );
