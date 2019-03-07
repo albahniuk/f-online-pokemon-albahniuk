@@ -2,19 +2,21 @@ import React, { Component } from 'react';
 import './App.scss';
 import PokemonList from './components/PokemonList';
 
-const ENDPOINT = 'https://pokeapi.co/api/v2/pokemon/?limit=3&offset=3';
+const ENDPOINT = 'https://pokeapi.co/api/v2/pokemon/?limit=3&offset=0';
 
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
       pokemon: [],
-      filteredPokemon: ''
+      filteredPokemon: '',
+      urlPokemon: []
     }
 
     this.getFilteredPokemon = this.getFilteredPokemon.bind(this);
     this.filterPokemon = this.filterPokemon.bind(this);
     this.getPokemon = this.getPokemon.bind(this);
+    this.getInfoPokemon = this.getInfoPokemon.bind(this);
   }
 
   getPokemon(){
@@ -25,11 +27,16 @@ class App extends Component {
         const newPokemon = data.results.map((item, index) => {
           return {...item, id: index};
         })
-        console.log(newPokemon);
+        const urlPokemon = data.results.map((item) => 
+          this.state.urlPokemon.push(item.url)
+        );
         this.setState({
-          pokemon: newPokemon,
+          pokemon: newPokemon
         })
+        return fetch(this.state.urlPokemon)
       })
+      
+      this.getInfoPokemon();
   }
 
   componentDidMount(){
@@ -41,6 +48,22 @@ class App extends Component {
     this.setState({
       filteredPokemon: query
     })
+  }
+
+  getInfoPokemon(){
+    const { urlPokemon } = this.state;
+    console.log(urlPokemon);
+    
+    const promises = urlPokemon.map(item => {
+      console.log(item);
+      return(
+        fetch(item)
+      )
+    })
+
+    return Promise.all(promises)
+    .then(data => console.log(data))
+      
   }
 
   getFilteredPokemon(){
