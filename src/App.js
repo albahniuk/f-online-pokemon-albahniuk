@@ -10,13 +10,15 @@ class App extends Component {
     this.state = {
       pokemon: [],
       filteredPokemon: '',
-      urlPokemon: []
+      urlPokemon: [],
+      imagesPokemon: [],
+      skillsPokemon: [],
+      idPokemon: []
     }
 
     this.getFilteredPokemon = this.getFilteredPokemon.bind(this);
     this.filterPokemon = this.filterPokemon.bind(this);
     this.getPokemon = this.getPokemon.bind(this);
-    this.getInfoPokemon = this.getInfoPokemon.bind(this);
   }
 
   getPokemon(){
@@ -27,14 +29,38 @@ class App extends Component {
         const newPokemon = data.results.map((item, index) => {
           return {...item, id: index};
         })
-        const urlPokemon = data.results.map((item) => 
-          this.state.urlPokemon.push(item.url)
-        );
         this.setState({
           pokemon: newPokemon
         })
+
+        data.results.map((item) => 
+          this.state.urlPokemon.push(item.url)
+        );
+
+        Promise.all(this.state.urlPokemon.map(url => fetch(url)))
+        .then(responses => Promise.all(
+          responses.map(r => r.json())
+        ))
+        .then(
+          pokemons => {
+          pokemons.map(pokemon => {
+            const name = pokemon.name;
+            const image = pokemon.sprites.front_default;
+            const skills = pokemon.abilities;
+            const id = pokemon.id;
+            this.setState({
+              imagesPokemon: image,
+              skillsPokemon: skills,
+              idPokemon: id
+            })
+            console.log(name);
+            console.log(image);
+            console.log(skills);
+            console.log(id);
+          })
+        });
+  
       })
-      this.getInfoPokemon();
   }
 
   componentDidMount(){
@@ -48,20 +74,6 @@ class App extends Component {
     })
   }
 
-  getInfoPokemon() {
-    const { urlPokemon } = this.state;
-    console.log(urlPokemon);
-
-    Promise.all(urlPokemon.map(url => fetch(url)))
-      .then(responses => Promise.all(
-        responses.map(r => r.json())
-      ))
-      .then(pokemons => {
-        pokemons.map(pokemon => console.log(pokemon))
-      });
-
-  }
-
   getFilteredPokemon(){
     const {pokemon, filteredPokemon} = this.state;
 
@@ -69,6 +81,7 @@ class App extends Component {
   }
 
   render() {
+    const {idPokemon, imagesPokemon, skillsPokemon} = this.state;
     return (
       <div className="app">
         <header className="app-header">
@@ -76,7 +89,7 @@ class App extends Component {
           <input type="text" onKeyUp={this.filterPokemon}/>
         </header>
         <main className="app-main">
-            <PokemonList filteredPokemon={this.getFilteredPokemon()}/>
+            <PokemonList filteredPokemon={this.getFilteredPokemon()} idPokemon={idPokemon} imagesPokemon={imagesPokemon} skillsPokemon={skillsPokemon}/>
         </main>
       </div>
     );
