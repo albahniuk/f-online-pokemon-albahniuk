@@ -50,20 +50,18 @@ class App extends Component {
     })
   }
 
-  getInfoPokemon(){
+  getInfoPokemon() {
     const { urlPokemon } = this.state;
     console.log(urlPokemon);
-    
-    const promises = urlPokemon.map(item => {
-      console.log(item);
-      return(
-        fetch(item)
-      )
-    })
 
-    return Promise.all(promises)
-    .then(data => console.log(data))
-      
+    Promise.all(urlPokemon.map(url => fetch(url)))
+      .then(responses => Promise.all(
+        responses.map(r => r.json())
+      ))
+      .then(pokemons => {
+        pokemons.map(pokemon => console.log(pokemon))
+      });
+
   }
 
   getFilteredPokemon(){
