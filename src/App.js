@@ -33,9 +33,7 @@ class App extends Component {
         this.setState({
           pokemon: newPokemon
         })
-        return fetch(this.state.urlPokemon)
       })
-      
       this.getInfoPokemon();
   }
 
