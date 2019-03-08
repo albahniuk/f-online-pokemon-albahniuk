@@ -8,12 +8,8 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      pokemon: [],
       filteredPokemon: '',
-      urlPokemon: [],
-      imagesPokemon: [],
-      skillsPokemon: [],
-      idPokemon: []
+      infoPokemon: [],
     }
 
     this.getFilteredPokemon = this.getFilteredPokemon.bind(this);
@@ -21,45 +17,23 @@ class App extends Component {
     this.getPokemon = this.getPokemon.bind(this);
   }
 
-  getPokemon(){
+  getPokemon() {
     fetch(ENDPOINT)
       .then(response => response.json())
       .then(data => {
-        console.log(data.results);
-        const newPokemon = data.results.map((item, index) => {
-          return {...item, id: index};
-        })
-        this.setState({
-          pokemon: newPokemon
-        })
+        const promiseList = data.results.map(item => fetch(item.url));
 
-        data.results.map((item) => 
-          this.state.urlPokemon.push(item.url)
-        );
-
-        Promise.all(this.state.urlPokemon.map(url => fetch(url)))
-        .then(responses => Promise.all(
-          responses.map(r => r.json())
-        ))
-        .then(
-          pokemons => {
-          pokemons.map(pokemon => {
-            const name = pokemon.name;
-            const image = pokemon.sprites.front_default;
-            const skills = pokemon.abilities;
-            const id = pokemon.id;
-            this.setState({
-              imagesPokemon: image,
-              skillsPokemon: skills,
-              idPokemon: id
-            })
-            console.log(name);
-            console.log(image);
-            console.log(skills);
-            console.log(id);
+        Promise.all(promiseList)
+          .then(responses => {
+            const res = responses.map(response => response.json())
+            Promise.all(res)
+              .then(pokemon => {
+                this.setState({
+                  infoPokemon: pokemon
+                })
+                console.log(this.state.infoPokemon);
+              })
           })
-        });
-  
       })
   }
 
@@ -75,13 +49,14 @@ class App extends Component {
   }
 
   getFilteredPokemon(){
-    const {pokemon, filteredPokemon} = this.state;
-
-    return pokemon.filter(item => item.name.toUpperCase().includes(filteredPokemon.toUpperCase()));
+    const {infoPokemon, filteredPokemon} = this.state;
+    console.log(this.state.infoPokemon);
+    return infoPokemon.filter(item => item.name.toUpperCase().includes(filteredPokemon.toUpperCase()));
+    
   }
 
   render() {
-    const {idPokemon, imagesPokemon, skillsPokemon} = this.state;
+    const { infoPokemon } = this.state;
     return (
       <div className="app">
         <header className="app-header">
@@ -89,7 +64,7 @@ class App extends Component {
           <input type="text" onKeyUp={this.filterPokemon}/>
         </header>
         <main className="app-main">
-            <PokemonList filteredPokemon={this.getFilteredPokemon()} idPokemon={idPokemon} imagesPokemon={imagesPokemon} skillsPokemon={skillsPokemon}/>
+          <PokemonList filteredPokemon={this.getFilteredPokemon()} infoPokemon={infoPokemon}/>
         </main>
       </div>
     );
