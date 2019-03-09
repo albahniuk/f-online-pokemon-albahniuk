@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PokemonDetails from './PokemonDetails';
 
 class PokemonList extends Component {
     render() {
@@ -13,16 +14,7 @@ class PokemonList extends Component {
                     {filteredPokemon.map(item => {
                         return(
                             <li className="pokemon-list__item" key={item.id}>
-                                <img className="pokemon-image" src={item.sprites.front_default} alt={item.name}/>
-                                <p className="pokemon-id">`id / {item.id}`</p>
-                                <p className="pokemon-name">{item.name}</p>
-                                <ul className="abilities-list">
-                                    {item.abilities.map((item, index) => {
-                                        return(
-                                            <li className="abilities-list__item" key={index}>{item.ability.name}</li>
-                                        )
-                                    })}
-                                </ul>
+                               <PokemonDetails name={item.name} id={item.id} abilities={item.abilities} image={item.sprites.front_default}/>
                             </li>
                         );
                     })}
