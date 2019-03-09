@@ -59,10 +59,14 @@ class App extends Component {
     return (
       <div className="app">
         <header className="app-header">
+          <div className="left-triangle"></div>
+          <div className="right-triangle"></div>
           <Filter filterPokemon={this.filterPokemon}/>
         </header>
         <main className="app-main">
           <PokemonList filteredPokemon={this.getFilteredPokemon()} infoPokemon={infoPokemon}/>
+          <div className="left-circle"></div>
+          <div className="right-circle"></div>
         </main>
       </div>
     );

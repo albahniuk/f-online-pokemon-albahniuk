@@ -2,7 +2,7 @@ import React, {Component, Fragment} from "react";
 
 class PokemonDetails extends Component {
   render() {
-    const {id, name, abilities, image} = this.props;
+    const {id, name, types, image} = this.props;
     return (
         <Fragment>
             <div className="image-container">
@@ -10,10 +10,10 @@ class PokemonDetails extends Component {
                 <p className="pokemon-id">id / {id}</p>
             </div>
             <p className="pokemon-name">{name}</p>
-            <ul className="abilities-list">
-                {abilities.map((item, index) => {
+            <ul className="types-list">
+                {types.map((item, index) => {
                     return(
-                        <li className="abilities-list__item" key={index}>{item.ability.name}</li>
+                        <li className="types-list__item" key={index}>{item.type.name}</li>
                     )
                 })}
             </ul>

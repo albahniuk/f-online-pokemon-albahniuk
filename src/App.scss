@@ -1,3 +1,58 @@
+body{
+  background-color: #F9E608;
+}
+
+.left-triangle{
+  width: 0;
+  height: 0;
+  border-right: 50px solid transparent;
+  border-top: 50px solid transparent;
+  border-left: 50px solid black;
+  border-bottom: 50px solid black;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  transform: rotate(90deg);
+}
+
+.right-triangle{
+  width: 0;
+  height: 0;
+  border-right: 50px solid transparent;
+  border-top: 50px solid transparent;
+  border-left: 50px solid black;
+  border-bottom: 50px solid black;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  transform: rotate(180deg);
+  right: 0;
+}
+
+.left-circle {
+  width: 100px; 
+  height: 100px; 
+  border: 2px solid red; 
+  background: red;
+  -moz-border-radius: 0 100% 0 0;
+  -webkit-border-radius: 0 100% 0 0;
+  border-radius: 0 100% 0 0;
+  position: fixed;
+  bottom: 0;
+}
+
+.right-circle {
+  width: 100px; 
+  height: 100px; 
+  border: 2px solid red; 
+  background: red;
+  -moz-border-radius: 0 100% 0 0;
+  -webkit-border-radius: 0 100% 0 0;
+  border-radius: 0 100% 0 0;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  transform: rotate(270deg);
+}
+
 // Filter
 
 .filter-container {
@@ -30,6 +85,7 @@
   margin: 10px;
   padding: 0;
   width: 200px;
+  background-color: white;
 }
 
 // PokemonDetails
@@ -37,8 +93,51 @@
 .image-container{
   background-color: lightgray;
   justify-content: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .pokemon-image{
-  margin: 5px;
+  margin: 10px;
+  align-self: center;
 }
+
+.pokemon-id{
+  background-color: darkgray;
+  color: grey;
+  align-self: flex-start;
+  padding: 3px 5px;
+  text-transform: uppercase;
+  margin: 0;
+  font-size: 12px;
+}
+
+.pokemon-name{
+  text-transform: capitalize;
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.types-list{
+  list-style-type: none;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  padding: 0;
+  display: flex;
+}
+
+.types-list__item{
+  border: 2px solid lightgray;
+  color: darkgray;
+  border-radius: 5px;
+  padding: 3px 5px;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.types-list__item + .types-list__item{
+  margin-left: 5px;
+}
+
+

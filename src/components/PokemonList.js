@@ -14,7 +14,7 @@ class PokemonList extends Component {
                     {filteredPokemon.map(item => {
                         return(
                             <li className="pokemon-list__item" key={item.id}>
-                               <PokemonDetails name={item.name} id={item.id} abilities={item.abilities} image={item.sprites.front_default}/>
+                               <PokemonDetails name={item.name} id={item.id} types={item.types} image={item.sprites.front_default}/>
                             </li>
                         );
                     })}
