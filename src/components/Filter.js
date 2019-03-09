@@ -5,7 +5,7 @@ class Filter extends Component {
     return (
       <div className="filter-container">
         <label></label>
-        <input type="text" onKeyUp={this.props.filterPokemon} placeholder="Busca un Pokemon..." className="filter-pokemon" />
+        <input type="text" onKeyUp={this.props.filterPokemon} placeholder="Search Pokémon..." className="filter-pokemon" />
       </div>
     );
   }
