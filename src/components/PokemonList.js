@@ -6,15 +6,15 @@ class PokemonList extends Component {
         const { filteredPokemon } = this.props;
         if (filteredPokemon.length === 0) {
             return (
-                <p>No hay resultados</p>
+                <p className="message">No hay resultados</p>
             )
         } else {
             return (
                 <ul className="pokemon-list">
                     {filteredPokemon.map(item => {
-                        return(
+                        return (
                             <li className="pokemon-list__item" key={item.id}>
-                               <PokemonDetails name={item.name} id={item.id} types={item.types} image={item.sprites.front_default}/>
+                                <PokemonDetails name={item.name} id={item.id} types={item.types} image={item.sprites.front_default} />
                             </li>
                         );
                     })}

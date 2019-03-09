@@ -61,8 +61,8 @@ body{
 }
 
 .filter-pokemon{
-  width: 500px;
-  height: 30px;
+  width: 550px;
+  height: 40px;
   text-align: center;
   box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.35);
   border: none;
@@ -73,9 +73,10 @@ body{
 .pokemon-list{
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   text-decoration: none;
   list-style-type: none;
-  margin: 20px 200px;
+  margin: 5px 200px;
   padding: 5px;
 }
 
@@ -86,6 +87,10 @@ body{
   padding: 0;
   width: 200px;
   background-color: white;
+}
+
+.message{
+  text-align: center;
 }
 
 // PokemonDetails
@@ -117,6 +122,7 @@ body{
   margin-left: 20px;
   font-weight: bold;
   font-size: 18px;
+  margin-bottom: 10px;
 }
 
 .types-list{
