@@ -10,7 +10,6 @@ body{
   border-left: 50px solid black;
   border-bottom: 50px solid black;
   position: fixed;
-  transform: translate(-50%, -50%);
   transform: rotate(90deg);
 }
 
@@ -22,7 +21,6 @@ body{
   border-left: 50px solid black;
   border-bottom: 50px solid black;
   position: fixed;
-  transform: translate(-50%, -50%);
   transform: rotate(180deg);
   right: 0;
 }

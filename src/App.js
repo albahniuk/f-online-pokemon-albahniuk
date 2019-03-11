@@ -33,7 +33,6 @@ class App extends Component {
                 this.setState({
                   infoPokemon: pokemon
                 })
-                console.log(this.state.infoPokemon);
               })
           })
       })
@@ -48,7 +47,6 @@ class App extends Component {
 
   getFilteredPokemon() {
     const { infoPokemon, filteredPokemon } = this.state;
-    console.log(this.state.infoPokemon);
     return infoPokemon.filter(item => item.name.toUpperCase().includes(filteredPokemon.toUpperCase()));
 
   }
