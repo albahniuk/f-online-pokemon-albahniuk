@@ -1,57 +1,30 @@
 import React, { Component } from 'react';
 import './App.scss';
 import PokemonList from './components/PokemonList';
-import { fetchPokemon } from './services/PokemonService';
+import { getPokemon } from './services/PokemonService';
 import Filter from './components/Filter';
 
 class App extends Component {
   state = {
     filteredPokemon: '',
-    infoPokemon: [],
+    infoPokemon: []
   }
 
   componentDidMount() {
-    this.getPokemon()
+    getPokemon()
+    .then(infoPokemon => this.setState({
+      infoPokemon
+    }))
   }
 
-  async getPokemon() {
-    const pokemonList = await fetchPokemon()
-    const list = await Promise.all(pokemonList.results.map(pokemon => this.getPokemonDetail(pokemon)))
-    this.setState({
-      infoPokemon: list
-    })      
-    // OLD WAY:
-    //   .then(data => {
-    //     const promiseList = data.results.map(item => fetch(item.url));
-    //     Promise.all(promiseList)
-    //       .then(responses => {
-    //         const res = responses.map(response => response.json())
-    //         Promise.all(res)
-    //           .then(pokemon => {
-    //             this.setState({
-    //               infoPokemon: pokemon
-    //             })
-    //           })
-    //       })
-    //   })
+  filterPokemon = (e) => {
+    const filteredPokemon = e.currentTarget.value;
+    this.setState({filteredPokemon})
   }
 
-  async getPokemonDetail(pokemon){
-    const pokeResponse = await fetch(pokemon.url)
-      return pokeResponse.json()
-  }
-
-  filterPokemon(e) {
-    const query = e.currentTarget.value;
-    this.setState({
-      filteredPokemon: query
-    })
-  }
-
-  getFilteredPokemon() {
+  getFilteredPokemon = () => {
     const { infoPokemon, filteredPokemon } = this.state;
     return infoPokemon.filter(item => item.name.toUpperCase().includes(filteredPokemon.toUpperCase()));
-
   }
 
   render() {

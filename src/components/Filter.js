@@ -1,14 +1,12 @@
-import React, {Component} from "react";
+import React from "react";
 
-class Filter extends Component {
-  render() {
-    return (
-      <div className="filter-container">
-        <label></label>
-        <input type="text" onKeyUp={this.props.filterPokemon} placeholder="Search Pokémon..." className="filter-pokemon" />
-      </div>
-    );
-  }
+function Filter({ filterPokemon }) {
+  return (
+    <div className="filter-container">
+      <label></label>
+      <input type="text" onKeyUp={filterPokemon} placeholder="Search Pokémon..." className="filter-pokemon" />
+    </div>
+  );
 }
 
 export default Filter;
